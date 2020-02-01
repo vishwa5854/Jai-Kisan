@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Jai Kisaan</string>
+    <string name="new_user">New User</string>
+    <string name="existing">Existing</string>
+    <string name="phone">phone</string>
+    <string name="next">next</string>
+    <string name="login">login</string>
+</resources>
