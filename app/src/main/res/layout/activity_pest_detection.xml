@@ -21,12 +21,12 @@
 
     <TextView
         android:id="@+id/outputData"
-        android:layout_width="210dp"
-        android:layout_height="201dp"
-        android:textColorHint="#000"
-        android:textColor="#000"
-        android:textSize="20sp"
+        android:layout_width="323dp"
+        android:layout_height="197dp"
         android:text="@string/prediction"
+        android:textColor="#000"
+        android:textColorHint="#000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

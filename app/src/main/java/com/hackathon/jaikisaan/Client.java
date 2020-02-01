@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,15 +23,17 @@ public class Client extends AsyncTask<Void,Void,Void> {
     private
     Context yay;
 
+
     Client(int request_code,Context y) {
         this.REQUEST_CODE = request_code;
         this.yay = y;
     }
 
+
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            Socket socket = new Socket("192.168.43.101",5854);
+            Socket socket = new Socket("192.168.43.33",5854);
 
             switch (this.REQUEST_CODE){
                 case 1: // login
@@ -44,8 +47,6 @@ public class Client extends AsyncTask<Void,Void,Void> {
                     OutputStream outputStream;
                     String data;
                     DataInputStream inputStream;
-                    byte[] n;
-                    int nn;
                     byte[] lol;
                     outputStream = socket.getOutputStream();
                     data = this.REQUEST_CODE + ",hyderabad" ;
@@ -53,16 +54,18 @@ public class Client extends AsyncTask<Void,Void,Void> {
                     inputStream = new DataInputStream(socket.getInputStream());
                     outputStream.write(data.getBytes());
 
-                    n = new byte[1];
-                    n[0] = (byte) inputStream.read();
-
-                    nn = Integer.parseInt(new String(n));
-
-                    lol = new byte[nn];
-                    for (int i = 0; i < nn; i++) {
-                        lol[i] = (byte) inputStream.read();
+                    lol = new byte[300];
+                    for (int i = 0; i < 300; i++) {
+                        lol[i] = inputStream.readByte();
                     }
                     Data.authentication = new String(lol);
+                    int i;
+                    for(i=0;i<300;i++){
+                        if(Data.authentication.charAt(i) == '@'){
+                            break;
+                        }
+                    }
+                    Data.authentication = Data.authentication.substring(0,i);
                     break;
                 case 4:
                     // crop estimate
@@ -70,9 +73,12 @@ public class Client extends AsyncTask<Void,Void,Void> {
                     break;
                 case 5:
                     // pest
-
-
-
+                    dataExchangeEstimate(socket,false);
+                    break;
+                case 6:
+                    // alerts
+                    alertTransport(socket);
+                    break;
             }
 
         } catch (IOException e) {
@@ -109,11 +115,10 @@ public class Client extends AsyncTask<Void,Void,Void> {
     }
 
     private void dataExchangeEstimate(Socket socket,boolean l) throws IOException {
+        int numberOfBytes = 500;
         OutputStream outputStream;
         String data;
         DataInputStream inputStream;
-        byte[] n;
-        int nn;
         byte[] lol;
         outputStream = socket.getOutputStream();
         if(l) {
@@ -125,17 +130,19 @@ public class Client extends AsyncTask<Void,Void,Void> {
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream.write(data.getBytes());
 
-//        n = new byte[1];
-//        n[0] = (byte) inputStream.read();
-//
-//        nn = Integer.parseInt(new String(n));
-//
-//        lol = new byte[nn];
-//        for (int i = 0; i < nn; i++) {
-//            lol[i] = (byte) inputStream.read();
-//        }
-//        Data.authentication = new String(lol);
-//        System.out.println(Data.authentication);
+        lol = new byte[numberOfBytes];
+        for (int i = 0; i < numberOfBytes; i++) {
+            lol[i] = inputStream.readByte();
+        }
+        Data.authentication = new String(lol);
+        int i;
+        for(i=0;i<numberOfBytes;i++){
+            if(Data.authentication.charAt(i) == '@'){
+                break;
+            }
+        }
+        Data.authentication = Data.authentication.substring(0,i);
+        System.out.println(Data.authentication);
     }
 
     @Override
@@ -172,10 +179,39 @@ public class Client extends AsyncTask<Void,Void,Void> {
                 imageView.setImageResource(R.drawable.rain);
             }
         }
+        if(REQUEST_CODE == 4){
+            System.out.println(Data.authentication);
+        }
         if(REQUEST_CODE == 5){
             TextView textView = new TextView(yay);
             textView.setText(Data.fileName);
         }
+    }
+
+    private void alertTransport(Socket socket) throws IOException {
+        OutputStream outputStream;
+        String data;
+        DataInputStream inputStream;
+        byte[] n;
+        int nn;
+        byte[] lol;
+        outputStream = socket.getOutputStream();
+
+        data = this.REQUEST_CODE + ","  + Data.conPhone;
+
+        inputStream = new DataInputStream(socket.getInputStream());
+        outputStream.write(data.getBytes());
+        n = new byte[1];
+        lol = new byte[300];
+        for (int i = 0; i < 300; i++) {
+            lol[i] = inputStream.readByte();
+            n[0] = lol[i];
+            String temp = new String(n);
+            if(temp.compareTo("~") == 0){
+                break;
+            }
+        }
+        Data.authentication = new String(lol);
     }
 
     private void openWeatherPage(){

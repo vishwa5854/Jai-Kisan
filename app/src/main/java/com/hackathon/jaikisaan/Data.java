@@ -18,4 +18,8 @@ class Data {
     static int cropEstimate;
     static String fileName;
 
+    static String conPhone;
+
+    static String pestData = "";
+
 }

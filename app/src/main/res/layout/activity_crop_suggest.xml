@@ -42,14 +42,13 @@
 
     <TextView
         android:id="@+id/output"
-        android:layout_width="172dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="296dp"
+        android:layout_width="326dp"
+        android:layout_height="103dp"
+        android:layout_marginBottom="256dp"
         android:text="@string/estimated"
         android:textColorHint="#000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

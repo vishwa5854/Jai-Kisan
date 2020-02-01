@@ -47,6 +47,12 @@ public class PestDetection extends AppCompatActivity {
             File file = new File(""+uri);
             Data.fileName = file.getName();
             op.setText(Data.fileName);
+            while (true){
+                if(Data.pestData.compareTo("") != 0){
+                    op.setText(Data.pestData);
+                    break;
+                }
+            }
         }
     }
 }
