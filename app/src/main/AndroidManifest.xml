@@ -14,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Weather"></activity>
+        <activity android:name=".Alert"></activity>
+        <activity android:name=".PestDetection" />
+        <activity android:name=".CropSuggest" />
+        <activity android:name=".Services" />
+        <activity android:name=".Weather" />
         <activity android:name=".ExistingUser" />
         <activity android:name=".NewUser" />
         <activity android:name=".MainActivity">

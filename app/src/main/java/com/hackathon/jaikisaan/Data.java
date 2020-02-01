@@ -1,6 +1,7 @@
 package com.hackathon.jaikisaan;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 
 class Data {
@@ -11,5 +12,10 @@ class Data {
     static String authentication = "";
     @SuppressLint("StaticFieldLeak")
     static Context existingUser;
+    @SuppressLint("StaticFieldLeak")
+    static Activity activity;
+
+    static int cropEstimate;
+    static String fileName;
 
 }

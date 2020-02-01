@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.DataInputStream;
@@ -40,6 +41,36 @@ public class Client extends AsyncTask<Void,Void,Void> {
                     break;
 
                 case 3: // get weather info
+                    OutputStream outputStream;
+                    String data;
+                    DataInputStream inputStream;
+                    byte[] n;
+                    int nn;
+                    byte[] lol;
+                    outputStream = socket.getOutputStream();
+                    data = this.REQUEST_CODE + ",hyderabad" ;
+
+                    inputStream = new DataInputStream(socket.getInputStream());
+                    outputStream.write(data.getBytes());
+
+                    n = new byte[1];
+                    n[0] = (byte) inputStream.read();
+
+                    nn = Integer.parseInt(new String(n));
+
+                    lol = new byte[nn];
+                    for (int i = 0; i < nn; i++) {
+                        lol[i] = (byte) inputStream.read();
+                    }
+                    Data.authentication = new String(lol);
+                    break;
+                case 4:
+                    // crop estimate
+                    dataExchangeEstimate(socket,true);
+                    break;
+                case 5:
+                    // pest
+
 
 
             }
@@ -75,8 +106,36 @@ public class Client extends AsyncTask<Void,Void,Void> {
             lol[i] = (byte) inputStream.read();
         }
         Data.authentication = new String(lol);
-        outputStream.close();
-        inputStream.close();
+    }
+
+    private void dataExchangeEstimate(Socket socket,boolean l) throws IOException {
+        OutputStream outputStream;
+        String data;
+        DataInputStream inputStream;
+        byte[] n;
+        int nn;
+        byte[] lol;
+        outputStream = socket.getOutputStream();
+        if(l) {
+            data = this.REQUEST_CODE + "," + Data.cropEstimate;
+        }else {
+            data = this.REQUEST_CODE + "," + Data.fileName;
+        }
+
+        inputStream = new DataInputStream(socket.getInputStream());
+        outputStream.write(data.getBytes());
+
+//        n = new byte[1];
+//        n[0] = (byte) inputStream.read();
+//
+//        nn = Integer.parseInt(new String(n));
+//
+//        lol = new byte[nn];
+//        for (int i = 0; i < nn; i++) {
+//            lol[i] = (byte) inputStream.read();
+//        }
+//        Data.authentication = new String(lol);
+//        System.out.println(Data.authentication);
     }
 
     @Override
@@ -100,7 +159,22 @@ public class Client extends AsyncTask<Void,Void,Void> {
             }
         }
         if(REQUEST_CODE == 3){
-            
+            ImageView imageView = new ImageView(yay);
+            TextView textView = new TextView(yay);
+            textView.setText(Data.authentication);
+            if(Data.authentication.compareTo("mist") == 0 || Data.authentication.compareTo("cloudy") == 0){
+                imageView.setImageResource(R.drawable.cloud);
+            }
+            if(Data.authentication.compareTo("sunny") == 0){
+                imageView.setImageResource(R.drawable.sun);
+            }
+            if(Data.authentication.compareTo("rainy") == 0){
+                imageView.setImageResource(R.drawable.rain);
+            }
+        }
+        if(REQUEST_CODE == 5){
+            TextView textView = new TextView(yay);
+            textView.setText(Data.fileName);
         }
     }
 

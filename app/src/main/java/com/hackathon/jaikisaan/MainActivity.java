@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button newUser;
     Button existingUser;
+    Button direct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
                 openSignInPage();
             }
         });
+
+        direct = findViewById(R.id.direct);
+        direct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDirectPage();
+            }
+        });
     }
 
 
@@ -44,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
     void openSignInPage(){
         Intent intent = new Intent(this.getApplicationContext(),ExistingUser.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    void openDirectPage(){
+        Intent intent = new Intent(this.getApplicationContext(),CropSuggest.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

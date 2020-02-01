@@ -5,4 +5,8 @@
     <string name="phone">phone</string>
     <string name="next">next</string>
     <string name="login">login</string>
+    <string name="services">Services</string>
+    <string name="budget">budget</string>
+    <string name="estimated">estimated</string>
+    <string name="prediction">prediction</string>
 </resources>

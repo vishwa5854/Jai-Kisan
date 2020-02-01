@@ -28,17 +28,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/next"
-        android:layout_width="56dp"
-        android:layout_height="52dp"
+    <Button
+        android:id="@+id/services"
+        android:background="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/services"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showOp"
-        app:layout_constraintVertical_bias="0.671"
-        app:srcCompat="@drawable/next" />
+        app:layout_constraintTop_toBottomOf="@+id/showOp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
